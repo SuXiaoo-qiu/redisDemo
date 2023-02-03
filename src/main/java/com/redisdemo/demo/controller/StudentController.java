@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/")
+@RequestMapping("/Student")
 @CrossOrigin //跨域
 /* 类注解 */
 @Api(value = "")
