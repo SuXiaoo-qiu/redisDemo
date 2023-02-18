@@ -1,6 +1,8 @@
 package com.redisdemo.demo.controller;
 
 import com.redisdemo.demo.utils.redisUtil;
+import com.redisdemo.demo.vo.HttpResult;
+import lombok.extern.slf4j.Slf4j;
 import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,6 +14,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/redis")
+@Slf4j
 public class RedisController {
     @Resource
     private redisUtil redisUtil;
@@ -52,9 +55,6 @@ public class RedisController {
                 e.printStackTrace();
             }
         }
-
-
-
         return "done";
     }
 
@@ -73,7 +73,7 @@ public class RedisController {
             synchronized (this){
                 //--------------- 逻辑代码开始------------------
                 if (redisUtil.get("num") == null){
-                    System.out.println("num为空");
+                    log.info("num为空");
                 }else {
                     // 获取当前库存
                     int stok= Integer.parseInt(redisUtil.get("num").toString());
@@ -81,25 +81,23 @@ public class RedisController {
                        int realStock =  stok - 1;
                        // 减少后 更新库存
                         redisUtil.set("num",realStock+"");
-                        System.out.println("当前库存为"+realStock);
+                        log.info("当前库存为"+realStock);
+
                     }else {
-                        System.out.println("扣减失败，库存不足");
+                        log.info("扣减失败，库存不足");
+
                     }
                 }
             }
 
         }catch (Exception e) {
-            System.out.println("系统错误");
+            log.info("系统错误");
+
         }
         finally {
             lock.unlock();
-            System.out.println("锁已关闭");
+            log.info("锁已关闭");
         }
-
-
-
-
-
             //--------------- 逻辑代码结束------------------
             //删除锁 为了防止误删 新增一个判断
 
@@ -123,5 +121,21 @@ public class RedisController {
             return "成功";
         }
         return "失败";
+    }
+
+
+    @PostMapping("/tt")
+    public HttpResult tt(){
+        String key = "add";
+        Object value = UUID.randomUUID().toString().replace("-", "");
+        boolean set = redisUtil.set(key, value);
+        System.out.println(HttpResult.success(redisUtil.get(value.toString())));
+        System.out.println(HttpResult.success());
+        HttpResult.success();
+        System.out.println(HttpResult.error("错误"));
+        if (set) {
+            return HttpResult.success();
+        }
+        return HttpResult.error("c出错了");
     }
 }
