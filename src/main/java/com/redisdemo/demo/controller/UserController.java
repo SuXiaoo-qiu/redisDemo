@@ -68,7 +68,7 @@ public class UserController {
         user.setPassword(haashMap.get("password").toString());
         List<UserVO> all = userService.getAll(user);
         if (all != null && all.size() > 0) {
-            HttpResult.success(all);
+          return  HttpResult.success(all);
         }
         return  HttpResult.error("用户不存在");
     }
