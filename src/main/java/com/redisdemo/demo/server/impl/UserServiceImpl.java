@@ -43,6 +43,11 @@ public class UserServiceImpl implements UserService {
     	return userMapper.getAll(userQuery);
     }
 
+    @Override
+    public UserVO getOne(UserQuery query) {
+        return userMapper.getOne(query);
+    }
+
 
     /**
      * 根据主键查询

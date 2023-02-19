@@ -21,7 +21,13 @@ public interface UserMapper {
      */
 	List<UserVO> getAll(UserQuery query);
 
-   
+	/**
+	 * 查询一条数据
+	 * @param query
+	 * @return
+	 */
+	UserVO getOne(UserQuery query);
+
 	/**
      *分页查询所有记录
      * @param query

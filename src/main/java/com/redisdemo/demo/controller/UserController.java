@@ -73,15 +73,15 @@ public class UserController {
         UserQuery user = new UserQuery();
         user.setAccountNumber(haashMap.get("username").toString());
         user.setPassword(haashMap.get("password").toString());
-        List<UserVO> all = userService.getAll(user);
-        if (all != null && all.size() > 0) {
+        UserVO one = userService.getOne(user);
+        if (one != null) {
             UserLoginDTO userLoginDTO = new UserLoginDTO();
             userLoginDTO.setLoginUserAme(haashMap.get("username").toString());
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             userLoginDTO.setLastLoginTime(simpleDateFormat.format(new Date()));
             int add = userLoginService.add(userLoginDTO);
             if (add > 0) {
-                return  HttpResult.success(all);
+                return  HttpResult.success(one);
             }
             throw new RuntimeException("用户不存在");
         }
@@ -150,4 +150,30 @@ public class UserController {
          return HttpResult.success(userService.delete(id));
  
       }
+
+/*
+
+    */
+/**
+     * 用户导出
+     *//*
+
+    @ApiOperation(value = "用户导出")
+    @PostMapping("/ExportExcel")
+    public void ExportExcel() {
+        String fileName = "用户信息表.xlsx";
+        // 这里 需要指定写用哪个class去写，然后写到第一个sheet，名字为用户表 然后文件流会自动关闭
+        EasyExcel.write(fileName, MyUser.class).sheet("用户表").doWrite(data());
+    }
+*/
+
+
+
+
+
+
+
+
+
+
 }

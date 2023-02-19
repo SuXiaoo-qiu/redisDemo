@@ -26,6 +26,13 @@ public interface UserService {
      */
 	List<UserVO> getAll(UserQuery query);
 
+	/**
+	 *查询一条数据
+	 * @param query
+	 * @return 返回集合，没有返回空List
+	 */
+	UserVO getOne(UserQuery query);
+
     /**
      * 根据主键查询
      *
