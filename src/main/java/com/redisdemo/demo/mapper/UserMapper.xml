@@ -143,7 +143,7 @@
 
 
     <!-- 导出 -->
-    <select id="exportExcel" resultMap="BaseResultMap">
+    <select id="exportExcel" resultType="java.util.List">
         SELECT
         <include refid="baseColumns" />
         FROM user
@@ -183,7 +183,14 @@
 
     <!-- 根据主键获取单条记录 -->
     <select id="getById"      resultType="com.redisdemo.demo.entity.User"  parameterType="Integer">
-        SELECT <include refid="baseColumns"/> FROM user WHERE id = #{id} 
+        SELECT           id
+        , `name`
+        , account_number as accountNumber
+        , password
+        , create_time
+        , uodate_time
+        , create_people
+        , uodate_people FROM user WHERE id = #{id}
     </select>
     
 
@@ -193,7 +200,7 @@
         <trim prefix="(" suffix=")" suffixOverrides=",">	
         
            id,        
-          name,        
+          `name`,
           account_number,        
           password,        
           create_time,        
