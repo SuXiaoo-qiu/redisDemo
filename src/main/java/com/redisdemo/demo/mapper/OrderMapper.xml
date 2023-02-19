@@ -105,13 +105,13 @@
 
     <!-- 根据主键获取单条记录 -->
     <select id="getById"      resultType="com.redisdemo.demo.entity.Order"  parameterType="Integer">
-        SELECT <include refid="baseColumns"/> FROM order WHERE id = #{id} 
+        SELECT <include refid="baseColumns"/> FROM `order` WHERE id = #{id}
     </select>
     
 
     <!-- 插入全部字段 -->
     <insert id="add" parameterType="com.redisdemo.demo.dto.OrderDTO"  keyProperty="id" keyColumn="id" useGeneratedKeys="true">
-        INSERT INTO order
+        INSERT INTO `order`
         <trim prefix="(" suffix=")" suffixOverrides=",">	
         
            id,        
@@ -142,7 +142,7 @@
     <!-- 更新,更新全部字段 -->
     <update id="updateById" parameterType="com.redisdemo.demo.dto.OrderDTO">
     
-        UPDATE order 
+        UPDATE `order`
          <set>                                 
         		<if test="null != price and null != price and '' != price">
                  price=#{price}, 
@@ -186,7 +186,7 @@
 
     <!-- 根据主键删除记录批量 -->
 	<delete id="deleteByIds">
-		delete from order where id in
+		delete from `order` where id in
 		<foreach item="id" collection="array" open="(" separator="," close=")">
 			#{id}
 		</foreach>
@@ -194,7 +194,7 @@
 
     <!-- 根据主键删除记录 -->
 	<delete id="delete">
-		delete from order where   id = #{id}
+		delete from `order` where   id = #{id}
 	</delete>
 
 
