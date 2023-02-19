@@ -2,8 +2,10 @@ package com.redisdemo.demo.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.redisdemo.demo.dto.UserDTO;
+import com.redisdemo.demo.dto.UserLoginDTO;
 import com.redisdemo.demo.entity.User;
 import com.redisdemo.demo.query.UserQuery;
+import com.redisdemo.demo.server.UserLoginService;
 import com.redisdemo.demo.server.UserService;
 import com.redisdemo.demo.vo.HttpResult;
 import com.redisdemo.demo.vo.UserVO;
@@ -11,12 +13,15 @@ import io.netty.util.internal.StringUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.cglib.core.ClassInfo;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -29,7 +34,8 @@ public class UserController {
 
     @Resource
     private UserService userService;
-    
+    @Resource
+    private UserLoginService userLoginService;
     /**
      * 分页查询
      * @param query
@@ -56,6 +62,7 @@ public class UserController {
 
     @ApiOperation(value = "登录")
     @RequestMapping("login")
+    @Transactional //开启事务
     public HttpResult<UserVO> login (@RequestBody HashMap<String,Object> haashMap) {
         if (StringUtil.isNullOrEmpty(haashMap.get("username").toString())){
             return HttpResult.error("请输入用户名");
@@ -68,7 +75,15 @@ public class UserController {
         user.setPassword(haashMap.get("password").toString());
         List<UserVO> all = userService.getAll(user);
         if (all != null && all.size() > 0) {
-          return  HttpResult.success(all);
+            UserLoginDTO userLoginDTO = new UserLoginDTO();
+            userLoginDTO.setLoginUserAme(haashMap.get("username").toString());
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            userLoginDTO.setLastLoginTime(simpleDateFormat.format(new Date()));
+            int add = userLoginService.add(userLoginDTO);
+            if (add > 0) {
+                return  HttpResult.success(all);
+            }
+            throw new RuntimeException("用户不存在");
         }
         return  HttpResult.error("用户不存在");
     }
