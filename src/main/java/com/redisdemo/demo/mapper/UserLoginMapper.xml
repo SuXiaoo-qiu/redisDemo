@@ -10,8 +10,8 @@
     <!-- 表字段 -->
     <sql id="baseColumns">
           id
-        , login_user_ame
-        , last_login_time
+        , login_user_ame as loginUserAme
+        , last_login_time as lastLoginTime
      </sql> 
 
     <!-- 分页查询全部 -->
@@ -21,8 +21,8 @@
         FROM user_login 
         <where>
         		       		          
-		<if test="null != loginUserAme and null != loginUserAme and '' != loginUserAme">
-                    and  login_user_ame=#{loginUserAme}
+        <if test="loginUserAme != null and loginUserAme != ''">
+            and login_user_ame like concat('%',#{loginUserAme},'%')
         </if>
               		          
 		<if test="null != lastLoginTime and null != lastLoginTime and '' != lastLoginTime">

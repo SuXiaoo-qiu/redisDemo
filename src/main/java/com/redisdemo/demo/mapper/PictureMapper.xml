@@ -14,12 +14,12 @@
     <!-- 表字段 -->
     <sql id="baseColumns">
           id
-        , picture_name
-        , picture_url
-        , create_time
-        , uodate_time
-        , create_people
-        , uodate_people
+        , picture_name as pictureName
+        , picture_url as pictureUrl
+        , create_time as createTime
+        , uodate_time as uodateTime
+        , create_people as createPeople
+        , uodate_people as uodatePeople
      </sql> 
 
     <!-- 分页查询全部 -->
@@ -29,10 +29,9 @@
         FROM picture 
         <where>
         		       		          
-		<if test="null != pictureName and null != pictureName and '' != pictureName">
-                    and  picture_name=#{pictureName}
-        </if>
-              		          
+            <if test="pictureName != null and pictureName != ''">
+                and picture_name like concat('%',#{pictureName},'%')
+            </if>
 		<if test="null != pictureUrl and null != pictureUrl and '' != pictureUrl">
                     and  picture_url=#{pictureUrl}
         </if>
@@ -95,7 +94,13 @@
 
     <!-- 根据主键获取单条记录 -->
     <select id="getById"      resultType="com.redisdemo.demo.entity.Picture"  parameterType="Integer">
-        SELECT <include refid="baseColumns"/> FROM picture WHERE id = #{id} 
+        SELECT    id
+        , picture_name as pictureName
+        , picture_url as pictureUrl
+        , create_time as createTime
+        , uodate_time as uodateTime
+        , create_people as createPeople
+        , uodate_people as uodatePeople FROM picture WHERE id = #{id}
     </select>
     
 
