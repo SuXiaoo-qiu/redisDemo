@@ -7,6 +7,7 @@ import com.redisdemo.demo.query.UserQuery;
 import com.redisdemo.demo.server.UserService;
 import com.redisdemo.demo.vo.HttpResult;
 import com.redisdemo.demo.vo.UserVO;
+import io.netty.util.internal.StringUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.cglib.core.ClassInfo;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.List;
 
 @RestController
@@ -50,6 +52,27 @@ public class UserController {
     public HttpResult<UserVO> getAll (@RequestBody UserQuery query) {
         return  HttpResult.success(userService.getAll(query));
     }
+
+
+    @ApiOperation(value = "登录")
+    @RequestMapping("login")
+    public HttpResult<UserVO> login (@RequestBody HashMap<String,Object> haashMap) {
+        if (StringUtil.isNullOrEmpty(haashMap.get("username").toString())){
+            return HttpResult.error("请输入账号");
+        }
+        if (StringUtil.isNullOrEmpty(haashMap.get("password").toString())){
+            return HttpResult.error("请输入密码");
+        }
+        UserQuery user = new UserQuery();
+        user.setAccountNumber(haashMap.get("username").toString());
+        user.setPassword(haashMap.get("password").toString());
+        List<UserVO> all = userService.getAll(user);
+        if (all != null && all.size() > 0) {
+            HttpResult.success(all);
+        }
+        return  HttpResult.error("用户不存在");
+    }
+
 
     /**
      * 根据主键查询

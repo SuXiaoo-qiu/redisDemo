@@ -28,3 +28,5 @@ target
 .idea
 *.iml
 
+src/main/java/com/redisdemo/demo/config/
+src/main/java/com/redisdemo/demo/enu/
