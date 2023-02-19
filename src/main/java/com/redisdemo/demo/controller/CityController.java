@@ -89,7 +89,7 @@ public class CityController {
     @RequestMapping("updateById")
     public HttpResult updateById (@RequestBody CityDTO cityDto) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        cityDto.setUodatePeople(simpleDateFormat.format(new Date()));
+        cityDto.setUodateTime(simpleDateFormat.format(new Date()));
         return HttpResult.success((cityService.updateById(cityDto)));
     }
     
