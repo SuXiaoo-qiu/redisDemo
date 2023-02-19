@@ -27,7 +27,7 @@ public class AdvertisementVO  implements Serializable {
 	private String details;
 	/** 开始时间 */
     @ApiModelProperty("开始时间")
-	private String startTiem;
+	private String startTime;
 	/** 结束时间 */
     @ApiModelProperty("结束时间")
 	private String endTime;
