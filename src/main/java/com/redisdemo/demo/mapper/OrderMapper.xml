@@ -34,23 +34,20 @@
 		<if test="null != price and null != price and '' != price">
                     and  price=#{price}
         </if>
-              		          
-		<if test="null != orderDetails and null != orderDetails and '' != orderDetails">
+
+            <if test="null != orderDetails and null != orderDetails and '' != orderDetails">
                     and  order_details=#{orderDetails}
         </if>
-              		          
-		<if test="null != departureCity and null != departureCity and '' != departureCity">
-                    and  departure_city=#{departureCity}
-        </if>
-              		          
-		<if test="null != arriveCity and null != arriveCity and '' != arriveCity">
-                    and  arrive_city=#{arriveCity}
-        </if>
-              		          
-		<if test="null != passengers and null != passengers and '' != passengers">
-                    and  passengers=#{passengers}
-        </if>
-              		          
+            <if test="departureCity != null and departureCity != ''">
+             and departure_city like concat('%',#{departureCity},'%')
+             </if>
+            <if test="arriveCity != null and arriveCity != ''">
+                and arrive_city like concat('%',#{arriveCity},'%')
+            </if>
+            <if test="passengers != null and passengers != ''">
+                and passengers like concat('%',#{passengers},'%')
+            </if>
+
 		<if test="null != startTime and null != startTime and '' != startTime">
                     and  start_time=#{startTime}
         </if>

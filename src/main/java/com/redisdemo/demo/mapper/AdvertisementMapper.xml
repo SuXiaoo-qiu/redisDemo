@@ -24,11 +24,10 @@
         	<include refid="baseColumns" />
         FROM advertisement 
         <where>
-        		       		          
-		<if test="null != title and null != title and '' != title">
-                    and  title=#{title}
-        </if>
-              		          
+
+            <if test="title != null and title != ''">
+                and title like concat('%',#{title},'%')
+            </if>
 		<if test="null != details and null != details and '' != details">
                     and  details=#{details}
         </if>
