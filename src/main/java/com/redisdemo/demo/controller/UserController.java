@@ -14,12 +14,10 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.cglib.core.ClassInfo;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -99,7 +97,7 @@ public class UserController {
     @RequestMapping("getById")
     public HttpResult<User> getById(Integer id) {
         return HttpResult.success(userService.getById(id));
-    }    
+    }
      
     /**
      * 新增，忽略null字段
@@ -151,26 +149,18 @@ public class UserController {
  
       }
 
-/*
 
-    */
-/**
+
+
+
+    /**
      * 用户导出
-     *//*
-
-    @ApiOperation(value = "用户导出")
-    @PostMapping("/ExportExcel")
-    public void ExportExcel() {
-        String fileName = "用户信息表.xlsx";
-        // 这里 需要指定写用哪个class去写，然后写到第一个sheet，名字为用户表 然后文件流会自动关闭
-        EasyExcel.write(fileName, MyUser.class).sheet("用户表").doWrite(data());
+     */
+    @RequestMapping(value = "/exportExcel", method = RequestMethod.POST)
+    @ApiOperation(value = "导出excel",produces="application/octet-stream")
+    public void exportCorpLoanDemand(@RequestBody UserQuery query, HttpServletResponse response){ ;
+        userService.exportExcel(query,response);
     }
-*/
-
-
-
-
-
 
 
 

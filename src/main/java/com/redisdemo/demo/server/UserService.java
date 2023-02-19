@@ -8,6 +8,7 @@ import com.redisdemo.demo.query.UserQuery;
 import com.redisdemo.demo.vo.UserVO;
 import org.springframework.cglib.core.ClassInfo;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 public interface UserService {
@@ -25,6 +26,13 @@ public interface UserService {
      * @return 返回集合，没有返回空List
      */
 	List<UserVO> getAll(UserQuery query);
+
+	/**
+	 * 导出用户
+	 * @param query
+	 * @param response
+	 */
+	void exportExcel(UserQuery query , HttpServletResponse response) ;
 
 	/**
 	 *查询一条数据

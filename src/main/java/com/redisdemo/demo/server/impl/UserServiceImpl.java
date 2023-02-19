@@ -7,11 +7,15 @@ import com.redisdemo.demo.dto.UserDTO;
 import com.redisdemo.demo.entity.User;
 import com.redisdemo.demo.query.UserQuery;
 import com.redisdemo.demo.server.UserService;
+import com.redisdemo.demo.utils.ExcelUtil;
 import com.redisdemo.demo.vo.UserVO;
 import org.springframework.cglib.core.ClassInfo;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -41,6 +45,16 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<UserVO> getAll(UserQuery userQuery) {
     	return userMapper.getAll(userQuery);
+    }
+
+    @Override
+    public void exportExcel(UserQuery userQuery, HttpServletResponse response) {
+
+        List<List<String>> dataList = new ArrayList<>();
+
+        dataList = userMapper.exportExcel(userQuery);
+        List<String> titleList = Arrays.asList("序号","项目编码", "项目名称", "创建时间", "创建人");
+        ExcelUtil.uploadExcelAboutUser(response,"apply.xlsx",titleList,dataList);
     }
 
     @Override

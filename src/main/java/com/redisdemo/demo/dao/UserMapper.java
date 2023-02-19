@@ -74,5 +74,7 @@ public interface UserMapper {
      * @return 返回影响行数
      */
 	 int deleteByIds(List<String> ids);
+
+	 List<List<String>> exportExcel(UserQuery query);
 	
 }

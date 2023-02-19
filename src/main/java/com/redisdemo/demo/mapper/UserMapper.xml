@@ -15,7 +15,7 @@
     <!-- 表字段 -->
     <sql id="baseColumns">
           id
-        , name
+        , `name`
         , account_number
         , password
         , create_time
@@ -102,8 +102,48 @@
 			order by id desc
     </select>
 
-    <!-- 不分页查询全部 -->
+    <!-- 查询一条数据 -->
     <select id="getOne" resultMap="BaseResultMap">
+        SELECT
+        <include refid="baseColumns" />
+        FROM user
+        <where>
+
+            <if test="null != name and null != name and '' != name">
+                and  name=#{name}
+            </if>
+
+            <if test="null != accountNumber and null != accountNumber and '' != accountNumber">
+                and  account_number=#{accountNumber}
+            </if>
+
+            <if test="null != password and null != password and '' != password">
+                and  password=#{password}
+            </if>
+
+            <if test="null != createTime and null != createTime and '' != createTime">
+                and  create_time=#{createTime}
+            </if>
+
+            <if test="null != uodateTime and null != uodateTime and '' != uodateTime">
+                and  uodate_time=#{uodateTime}
+            </if>
+
+            <if test="null != createPeople and null != createPeople and '' != createPeople">
+                and  create_people=#{createPeople}
+            </if>
+
+            <if test="null != uodatePeople and null != uodatePeople and '' != uodatePeople">
+                and  uodate_people=#{uodatePeople}
+            </if>
+
+        </where>
+        order by id desc
+    </select>
+
+
+    <!-- 导出 -->
+    <select id="exportExcel" resultMap="BaseResultMap">
         SELECT
         <include refid="baseColumns" />
         FROM user
