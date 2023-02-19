@@ -15,13 +15,13 @@
     <!-- 表字段 -->
     <sql id="baseColumns">
           id
-        , price
-        , order_details
-        , departure_city
-        , arrive_city
-        , passengers
-        , start_time
-        , end_time
+        , price as price
+        , order_details  as  orderDetails
+        , departure_city as departureCity
+        , arrive_city as  arriveCity
+        , passengers as  passengers
+        , start_time as startTime
+        , end_time as  endTime
      </sql> 
 
     <!-- 分页查询全部 -->
@@ -62,7 +62,8 @@
        </where>
 			order by id desc
     </select>
-    
+
+
         <!-- 不分页查询全部 -->
     <select id="getAll" resultMap="BaseResultMap">
         SELECT         
@@ -198,6 +199,21 @@
 	</delete>
 
 
+
+    <!-- 分页查询报表数据 -->
+    <select id="getReportFormPage" resultType="com.redisdemo.demo.vo.ReportFormVO">
+      SELECT
+            passengers AS passengers,
+            departure_city AS departureCity,
+            SUM( price ) AS price,
+            arrive_city AS arriveCity
+        FROM
+            `order`
+        GROUP BY
+            departure_city,
+            passengers,
+            arrive_city
+    </select>
 
 
 </mapper>

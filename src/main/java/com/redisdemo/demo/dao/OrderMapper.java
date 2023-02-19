@@ -68,5 +68,8 @@ public interface OrderMapper {
      * @return 返回影响行数
      */
 	 int deleteByIds(List<String> ids);
+
+
+	List<ClassInfo>  getReportFormPage(OrderQuery query);
 	
 }

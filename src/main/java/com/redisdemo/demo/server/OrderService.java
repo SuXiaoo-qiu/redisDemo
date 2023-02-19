@@ -65,5 +65,11 @@ public interface OrderService {
      * @return 返回影响行数
      */
 	 int deleteByIds(List<String> ids);
-	
+
+	/**
+	 * 报表分页查询
+	 * @param query
+	 * @return
+	 */
+	PageInfo<ClassInfo> getReportFormPage(OrderQuery query);
 }

@@ -100,6 +100,13 @@ public class OrderServiceImpl implements OrderService {
     public int deleteByIds( List<String> ids) {
     	return orderMapper.deleteByIds(ids);
     }
-    
- 
+
+    @Override
+    public PageInfo<ClassInfo> getReportFormPage(OrderQuery query) {
+        PageHelper.startPage(query.getPageCode(),query.getPageSize());
+        List<ClassInfo> page = orderMapper.getReportFormPage(query);
+        return new PageInfo<>(page);
+    }
+
+
 }
