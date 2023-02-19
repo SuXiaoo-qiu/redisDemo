@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.redisdemo.demo.dao.AdvertisementMapper">
+    <resultMap id="BaseResultMap" type="com.redisdemo.demo.vo.AdvertisementVO">
+        <result column="id" property="id" />
+        <result column="title" property="title" />
+        <result column="details" property="details" />
+        <result column="start_tiem" property="startTiem" />
+        <result column="end_time" property="endTime" />
+    </resultMap>  
+
+    <!-- 表字段 -->
+    <sql id="baseColumns">
+          id
+        , title
+        , details
+        , start_tiem
+        , end_time
+     </sql> 
+
+    <!-- 分页查询全部 -->
+    <select id="getPage" resultMap="BaseResultMap">
+        SELECT         
+        	<include refid="baseColumns" />
+        FROM advertisement 
+        <where>
+        		       		          
+		<if test="null != title and null != title and '' != title">
+                    and  title=#{title}
+        </if>
+              		          
+		<if test="null != details and null != details and '' != details">
+                    and  details=#{details}
+        </if>
+              		          
+		<if test="null != startTiem and null != startTiem and '' != startTiem">
+                    and  start_tiem=#{startTiem}
+        </if>
+              		          
+		<if test="null != endTime and null != endTime and '' != endTime">
+                    and  end_time=#{endTime}
+        </if>
+                     
+       </where>
+			order by id desc
+    </select>
+    
+        <!-- 不分页查询全部 -->
+    <select id="getAll" resultMap="BaseResultMap">
+        SELECT         
+        	<include refid="baseColumns" />
+        FROM advertisement 
+        <where>
+        		       		          
+		<if test="null != title and null != title and '' != title">
+                    and  title=#{title}
+        </if>
+              		          
+		<if test="null != details and null != details and '' != details">
+                    and  details=#{details}
+        </if>
+              		          
+		<if test="null != startTiem and null != startTiem and '' != startTiem">
+                    and  start_tiem=#{startTiem}
+        </if>
+              		          
+		<if test="null != endTime and null != endTime and '' != endTime">
+                    and  end_time=#{endTime}
+        </if>
+                     
+       </where>
+			order by id desc
+    </select>
+
+
+    <!-- 根据主键获取单条记录 -->
+    <select id="getById"      resultType="com.redisdemo.demo.entity.Advertisement"  parameterType="Integer">
+        SELECT <include refid="baseColumns"/> FROM advertisement WHERE id = #{id} 
+    </select>
+    
+
+    <!-- 插入全部字段 -->
+    <insert id="add" parameterType="com.redisdemo.demo.dto.AdvertisementDTO"  keyProperty="id" keyColumn="id" useGeneratedKeys="true">
+        INSERT INTO advertisement
+        <trim prefix="(" suffix=")" suffixOverrides=",">	
+        
+           id,        
+          title,        
+          details,        
+          start_tiem,        
+          end_time,        
+            
+        </trim>
+        
+        <trim prefix="VALUES (" suffix=")" suffixOverrides=",">            
+           #{id},         
+ 		   #{title},         
+ 		   #{details},         
+ 		   #{startTiem},         
+ 		   #{endTime},         
+ 		 	    </trim>
+        
+   		</insert>
+
+
+    <!-- 更新,更新全部字段 -->
+    <update id="updateById" parameterType="com.redisdemo.demo.dto.AdvertisementDTO">
+    
+        UPDATE advertisement 
+         <set>                                 
+        		<if test="null != title and null != title and '' != title">
+                 title=#{title}, 
+       		 </if>
+        
+                                
+        		<if test="null != details and null != details and '' != details">
+                 details=#{details}, 
+       		 </if>
+        
+                                
+        		<if test="null != startTiem and null != startTiem and '' != startTiem">
+                 start_tiem=#{startTiem}, 
+       		 </if>
+        
+                                
+        		<if test="null != endTime and null != endTime and '' != endTime">
+                 end_time=#{endTime}, 
+       		 </if>
+        
+                        </set> WHERE  id = #{id}
+     
+    </update>  
+
+
+
+    <!-- 根据主键删除记录批量 -->
+	<delete id="deleteByIds">
+		delete from advertisement where id in
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+    <!-- 根据主键删除记录 -->
+	<delete id="delete">
+		delete from advertisement where   id = #{id}
+	</delete>
+
+
+
+
+</mapper>

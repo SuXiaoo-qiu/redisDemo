@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.redisdemo.demo.dao.PictureMapper">
+    <resultMap id="BaseResultMap" type="com.redisdemo.demo.vo.PictureVO">
+        <result column="id" property="id" />
+        <result column="picture_name" property="pictureName" />
+        <result column="picture_url" property="pictureUrl" />
+        <result column="create_time" property="createTime" />
+        <result column="uodate_time" property="uodateTime" />
+        <result column="create_people" property="createPeople" />
+        <result column="uodate_people" property="uodatePeople" />
+    </resultMap>  
+
+    <!-- 表字段 -->
+    <sql id="baseColumns">
+          id
+        , picture_name
+        , picture_url
+        , create_time
+        , uodate_time
+        , create_people
+        , uodate_people
+     </sql> 
+
+    <!-- 分页查询全部 -->
+    <select id="getPage" resultMap="BaseResultMap">
+        SELECT         
+        	<include refid="baseColumns" />
+        FROM picture 
+        <where>
+        		       		          
+		<if test="null != pictureName and null != pictureName and '' != pictureName">
+                    and  picture_name=#{pictureName}
+        </if>
+              		          
+		<if test="null != pictureUrl and null != pictureUrl and '' != pictureUrl">
+                    and  picture_url=#{pictureUrl}
+        </if>
+              		          
+		<if test="null != createTime and null != createTime and '' != createTime">
+                    and  create_time=#{createTime}
+        </if>
+              		          
+		<if test="null != uodateTime and null != uodateTime and '' != uodateTime">
+                    and  uodate_time=#{uodateTime}
+        </if>
+              		          
+		<if test="null != createPeople and null != createPeople and '' != createPeople">
+                    and  create_people=#{createPeople}
+        </if>
+              		          
+		<if test="null != uodatePeople and null != uodatePeople and '' != uodatePeople">
+                    and  uodate_people=#{uodatePeople}
+        </if>
+                     
+       </where>
+			order by id desc
+    </select>
+    
+        <!-- 不分页查询全部 -->
+    <select id="getAll" resultMap="BaseResultMap">
+        SELECT         
+        	<include refid="baseColumns" />
+        FROM picture 
+        <where>
+        		       		          
+		<if test="null != pictureName and null != pictureName and '' != pictureName">
+                    and  picture_name=#{pictureName}
+        </if>
+              		          
+		<if test="null != pictureUrl and null != pictureUrl and '' != pictureUrl">
+                    and  picture_url=#{pictureUrl}
+        </if>
+              		          
+		<if test="null != createTime and null != createTime and '' != createTime">
+                    and  create_time=#{createTime}
+        </if>
+              		          
+		<if test="null != uodateTime and null != uodateTime and '' != uodateTime">
+                    and  uodate_time=#{uodateTime}
+        </if>
+              		          
+		<if test="null != createPeople and null != createPeople and '' != createPeople">
+                    and  create_people=#{createPeople}
+        </if>
+              		          
+		<if test="null != uodatePeople and null != uodatePeople and '' != uodatePeople">
+                    and  uodate_people=#{uodatePeople}
+        </if>
+                     
+       </where>
+			order by id desc
+    </select>
+
+
+    <!-- 根据主键获取单条记录 -->
+    <select id="getById"      resultType="com.redisdemo.demo.entity.Picture"  parameterType="Integer">
+        SELECT <include refid="baseColumns"/> FROM picture WHERE id = #{id} 
+    </select>
+    
+
+    <!-- 插入全部字段 -->
+    <insert id="add" parameterType="com.redisdemo.demo.dto.PictureDTO"  keyProperty="id" keyColumn="id" useGeneratedKeys="true">
+        INSERT INTO picture
+        <trim prefix="(" suffix=")" suffixOverrides=",">	
+        
+           id,        
+          picture_name,        
+          picture_url,        
+          create_time,        
+          uodate_time,        
+          create_people,        
+          uodate_people,        
+            
+        </trim>
+        
+        <trim prefix="VALUES (" suffix=")" suffixOverrides=",">            
+           #{id},         
+ 		   #{pictureName},         
+ 		   #{pictureUrl},         
+ 		   #{createTime},         
+ 		   #{uodateTime},         
+ 		   #{createPeople},         
+ 		   #{uodatePeople},         
+ 		 	    </trim>
+        
+   		</insert>
+
+
+    <!-- 更新,更新全部字段 -->
+    <update id="updateById" parameterType="com.redisdemo.demo.dto.PictureDTO">
+    
+        UPDATE picture 
+         <set>                                 
+        		<if test="null != pictureName and null != pictureName and '' != pictureName">
+                 picture_name=#{pictureName}, 
+       		 </if>
+        
+                                
+        		<if test="null != pictureUrl and null != pictureUrl and '' != pictureUrl">
+                 picture_url=#{pictureUrl}, 
+       		 </if>
+        
+                                
+        		<if test="null != createTime and null != createTime and '' != createTime">
+                 create_time=#{createTime}, 
+       		 </if>
+        
+                                
+        		<if test="null != uodateTime and null != uodateTime and '' != uodateTime">
+                 uodate_time=#{uodateTime}, 
+       		 </if>
+        
+                                
+        		<if test="null != createPeople and null != createPeople and '' != createPeople">
+                 create_people=#{createPeople}, 
+       		 </if>
+        
+                                
+        		<if test="null != uodatePeople and null != uodatePeople and '' != uodatePeople">
+                 uodate_people=#{uodatePeople}, 
+       		 </if>
+        
+                        </set> WHERE  id = #{id}
+     
+    </update>  
+
+
+
+    <!-- 根据主键删除记录批量 -->
+	<delete id="deleteByIds">
+		delete from picture where id in
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+    <!-- 根据主键删除记录 -->
+	<delete id="delete">
+		delete from picture where   id = #{id}
+	</delete>
+
+
+
+
+</mapper>

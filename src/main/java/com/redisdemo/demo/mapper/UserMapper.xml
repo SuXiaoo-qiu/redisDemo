@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.redisdemo.demo.dao.UserMapper">
+    <resultMap id="BaseResultMap" type="com.redisdemo.demo.vo.UserVO">
+        <result column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="account_number" property="accountNumber" />
+        <result column="password" property="password" />
+        <result column="create_time" property="createTime" />
+        <result column="uodate_time" property="uodateTime" />
+        <result column="create_people" property="createPeople" />
+        <result column="uodate_people" property="uodatePeople" />
+    </resultMap>  
+
+    <!-- 表字段 -->
+    <sql id="baseColumns">
+          id
+        , name
+        , account_number
+        , password
+        , create_time
+        , uodate_time
+        , create_people
+        , uodate_people
+     </sql> 
+
+    <!-- 分页查询全部 -->
+    <select id="getPage" resultMap="BaseResultMap">
+        SELECT         
+        	<include refid="baseColumns" />
+        FROM user 
+        <where>
+        		       		          
+		<if test="null != name and null != name and '' != name">
+                    and  name=#{name}
+        </if>
+              		          
+		<if test="null != accountNumber and null != accountNumber and '' != accountNumber">
+                    and  account_number=#{accountNumber}
+        </if>
+              		          
+		<if test="null != password and null != password and '' != password">
+                    and  password=#{password}
+        </if>
+              		          
+		<if test="null != createTime and null != createTime and '' != createTime">
+                    and  create_time=#{createTime}
+        </if>
+              		          
+		<if test="null != uodateTime and null != uodateTime and '' != uodateTime">
+                    and  uodate_time=#{uodateTime}
+        </if>
+              		          
+		<if test="null != createPeople and null != createPeople and '' != createPeople">
+                    and  create_people=#{createPeople}
+        </if>
+              		          
+		<if test="null != uodatePeople and null != uodatePeople and '' != uodatePeople">
+                    and  uodate_people=#{uodatePeople}
+        </if>
+                     
+       </where>
+			order by id desc
+    </select>
+    
+        <!-- 不分页查询全部 -->
+    <select id="getAll" resultMap="BaseResultMap">
+        SELECT         
+        	<include refid="baseColumns" />
+        FROM user 
+        <where>
+        		       		          
+		<if test="null != name and null != name and '' != name">
+                    and  name=#{name}
+        </if>
+              		          
+		<if test="null != accountNumber and null != accountNumber and '' != accountNumber">
+                    and  account_number=#{accountNumber}
+        </if>
+              		          
+		<if test="null != password and null != password and '' != password">
+                    and  password=#{password}
+        </if>
+              		          
+		<if test="null != createTime and null != createTime and '' != createTime">
+                    and  create_time=#{createTime}
+        </if>
+              		          
+		<if test="null != uodateTime and null != uodateTime and '' != uodateTime">
+                    and  uodate_time=#{uodateTime}
+        </if>
+              		          
+		<if test="null != createPeople and null != createPeople and '' != createPeople">
+                    and  create_people=#{createPeople}
+        </if>
+              		          
+		<if test="null != uodatePeople and null != uodatePeople and '' != uodatePeople">
+                    and  uodate_people=#{uodatePeople}
+        </if>
+                     
+       </where>
+			order by id desc
+    </select>
+
+
+    <!-- 根据主键获取单条记录 -->
+    <select id="getById"      resultType="com.redisdemo.demo.entity.User"  parameterType="Integer">
+        SELECT <include refid="baseColumns"/> FROM user WHERE id = #{id} 
+    </select>
+    
+
+    <!-- 插入全部字段 -->
+    <insert id="add" parameterType="com.redisdemo.demo.dto.UserDTO"  keyProperty="id" keyColumn="id" useGeneratedKeys="true">
+        INSERT INTO user
+        <trim prefix="(" suffix=")" suffixOverrides=",">	
+        
+           id,        
+          name,        
+          account_number,        
+          password,        
+          create_time,        
+          uodate_time,        
+          create_people,        
+          uodate_people,        
+            
+        </trim>
+        
+        <trim prefix="VALUES (" suffix=")" suffixOverrides=",">            
+           #{id},         
+ 		   #{name},         
+ 		   #{accountNumber},         
+ 		   #{password},         
+ 		   #{createTime},         
+ 		   #{uodateTime},         
+ 		   #{createPeople},         
+ 		   #{uodatePeople},         
+ 		 	    </trim>
+        
+   		</insert>
+
+
+    <!-- 更新,更新全部字段 -->
+    <update id="updateById" parameterType="com.redisdemo.demo.dto.UserDTO">
+    
+        UPDATE user 
+         <set>                                 
+        		<if test="null != name and null != name and '' != name">
+                 name=#{name}, 
+       		 </if>
+        
+                                
+        		<if test="null != accountNumber and null != accountNumber and '' != accountNumber">
+                 account_number=#{accountNumber}, 
+       		 </if>
+        
+                                
+        		<if test="null != password and null != password and '' != password">
+                 password=#{password}, 
+       		 </if>
+        
+                                
+        		<if test="null != createTime and null != createTime and '' != createTime">
+                 create_time=#{createTime}, 
+       		 </if>
+        
+                                
+        		<if test="null != uodateTime and null != uodateTime and '' != uodateTime">
+                 uodate_time=#{uodateTime}, 
+       		 </if>
+        
+                                
+        		<if test="null != createPeople and null != createPeople and '' != createPeople">
+                 create_people=#{createPeople}, 
+       		 </if>
+        
+                                
+        		<if test="null != uodatePeople and null != uodatePeople and '' != uodatePeople">
+                 uodate_people=#{uodatePeople}, 
+       		 </if>
+        
+                        </set> WHERE  id = #{id}
+     
+    </update>  
+
+
+
+    <!-- 根据主键删除记录批量 -->
+	<delete id="deleteByIds">
+		delete from user where id in
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+    <!-- 根据主键删除记录 -->
+	<delete id="delete">
+		delete from user where   id = #{id}
+	</delete>
+
+
+
+
+</mapper>

@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.redisdemo.demo.dao.UserLoginMapper">
+    <resultMap id="BaseResultMap" type="com.redisdemo.demo.vo.UserLoginVO">
+        <result column="id" property="id" />
+        <result column="login_user_ame" property="loginUserAme" />
+        <result column="last_login_time" property="lastLoginTime" />
+    </resultMap>  
+
+    <!-- 表字段 -->
+    <sql id="baseColumns">
+          id
+        , login_user_ame
+        , last_login_time
+     </sql> 
+
+    <!-- 分页查询全部 -->
+    <select id="getPage" resultMap="BaseResultMap">
+        SELECT         
+        	<include refid="baseColumns" />
+        FROM user_login 
+        <where>
+        		       		          
+		<if test="null != loginUserAme and null != loginUserAme and '' != loginUserAme">
+                    and  login_user_ame=#{loginUserAme}
+        </if>
+              		          
+		<if test="null != lastLoginTime and null != lastLoginTime and '' != lastLoginTime">
+                    and  last_login_time=#{lastLoginTime}
+        </if>
+                     
+       </where>
+			order by id desc
+    </select>
+    
+        <!-- 不分页查询全部 -->
+    <select id="getAll" resultMap="BaseResultMap">
+        SELECT         
+        	<include refid="baseColumns" />
+        FROM user_login 
+        <where>
+        		       		          
+		<if test="null != loginUserAme and null != loginUserAme and '' != loginUserAme">
+                    and  login_user_ame=#{loginUserAme}
+        </if>
+              		          
+		<if test="null != lastLoginTime and null != lastLoginTime and '' != lastLoginTime">
+                    and  last_login_time=#{lastLoginTime}
+        </if>
+                     
+       </where>
+			order by id desc
+    </select>
+
+
+    <!-- 根据主键获取单条记录 -->
+    <select id="getById"      resultType="com.redisdemo.demo.entity.UserLogin"  parameterType="Integer">
+        SELECT <include refid="baseColumns"/> FROM user_login WHERE id = #{id} 
+    </select>
+    
+
+    <!-- 插入全部字段 -->
+    <insert id="add" parameterType="com.redisdemo.demo.dto.UserLoginDTO"  keyProperty="id" keyColumn="id" useGeneratedKeys="true">
+        INSERT INTO user_login
+        <trim prefix="(" suffix=")" suffixOverrides=",">	
+        
+           id,        
+          login_user_ame,        
+          last_login_time,        
+            
+        </trim>
+        
+        <trim prefix="VALUES (" suffix=")" suffixOverrides=",">            
+           #{id},         
+ 		   #{loginUserAme},         
+ 		   #{lastLoginTime},         
+ 		 	    </trim>
+        
+   		</insert>
+
+
+    <!-- 更新,更新全部字段 -->
+    <update id="updateById" parameterType="com.redisdemo.demo.dto.UserLoginDTO">
+    
+        UPDATE user_login 
+         <set>                                 
+        		<if test="null != loginUserAme and null != loginUserAme and '' != loginUserAme">
+                 login_user_ame=#{loginUserAme}, 
+       		 </if>
+        
+                                
+        		<if test="null != lastLoginTime and null != lastLoginTime and '' != lastLoginTime">
+                 last_login_time=#{lastLoginTime}, 
+       		 </if>
+        
+                        </set> WHERE  id = #{id}
+     
+    </update>  
+
+
+
+    <!-- 根据主键删除记录批量 -->
+	<delete id="deleteByIds">
+		delete from user_login where id in
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+    <!-- 根据主键删除记录 -->
+	<delete id="delete">
+		delete from user_login where   id = #{id}
+	</delete>
+
+
+
+
+</mapper>

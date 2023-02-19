@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.redisdemo.demo.dao.StudentMapper">
+    <resultMap id="BaseResultMap" type="com.redisdemo.demo.vo.StudentVO">
+        <result column="id" property="id" />
+        <result column="student_num" property="studentNum" />
+        <result column="student_name" property="studentName" />
+        <result column="nation" property="nation" />
+        <result column="college" property="college" />
+        <result column="major" property="major" />
+        <result column="grade" property="grade" />
+        <result column="student_class" property="studentClass" />
+        <result column="student_id" property="studentId" />
+        <result column="student_sex" property="studentSex" />
+        <result column="create_people" property="createPeople" />
+        <result column="create_time" property="createTime" />
+        <result column="update_people" property="updatePeople" />
+        <result column="update_time" property="updateTime" />
+        <result column="is_delete" property="isDelete" />
+    </resultMap>  
+
+    <!-- 表字段 -->
+    <sql id="baseColumns">
+          id
+        , student_num
+        , student_name
+        , nation
+        , college
+        , major
+        , grade
+        , student_class
+        , student_id
+        , student_sex
+        , create_people
+        , create_time
+        , update_people
+        , update_time
+        , is_delete
+     </sql> 
+
+    <!-- 分页查询全部 -->
+    <select id="getPage" resultMap="BaseResultMap">
+        SELECT         
+        	<include refid="baseColumns" />
+        FROM t_student 
+        <where>
+        		       		          
+		<if test="null != studentNum and null != studentNum and '' != studentNum">
+                    and  student_num=#{studentNum}
+        </if>
+              		          
+		<if test="null != studentName and null != studentName and '' != studentName">
+                    and  student_name=#{studentName}
+        </if>
+              		          
+		<if test="null != nation and null != nation and '' != nation">
+                    and  nation=#{nation}
+        </if>
+              		          
+		<if test="null != college and null != college and '' != college">
+                    and  college=#{college}
+        </if>
+              		          
+		<if test="null != major and null != major and '' != major">
+                    and  major=#{major}
+        </if>
+              		          
+		<if test="null != grade and null != grade and '' != grade">
+                    and  grade=#{grade}
+        </if>
+              		          
+		<if test="null != studentClass and null != studentClass and '' != studentClass">
+                    and  student_class=#{studentClass}
+        </if>
+              		          
+		<if test="null != studentId and null != studentId and '' != studentId">
+                    and  student_id=#{studentId}
+        </if>
+              		          
+		<if test="null != studentSex and null != studentSex and '' != studentSex">
+                    and  student_sex=#{studentSex}
+        </if>
+              		          
+		<if test="null != createPeople and null != createPeople and '' != createPeople">
+                    and  create_people=#{createPeople}
+        </if>
+              		          
+		<if test="null != createTime and null != createTime and '' != createTime">
+                    and  create_time=#{createTime}
+        </if>
+              		          
+		<if test="null != updatePeople and null != updatePeople and '' != updatePeople">
+                    and  update_people=#{updatePeople}
+        </if>
+              		          
+		<if test="null != updateTime and null != updateTime and '' != updateTime">
+                    and  update_time=#{updateTime}
+        </if>
+              		          
+		<if test="null != isDelete and null != isDelete and '' != isDelete">
+                    and  is_delete=#{isDelete}
+        </if>
+                     
+       </where>
+			order by id desc
+    </select>
+    
+        <!-- 不分页查询全部 -->
+    <select id="getAll" resultMap="BaseResultMap">
+        SELECT         
+        	<include refid="baseColumns" />
+        FROM t_student 
+        <where>
+        		       		          
+		<if test="null != studentNum and null != studentNum and '' != studentNum">
+                    and  student_num=#{studentNum}
+        </if>
+              		          
+		<if test="null != studentName and null != studentName and '' != studentName">
+                    and  student_name=#{studentName}
+        </if>
+              		          
+		<if test="null != nation and null != nation and '' != nation">
+                    and  nation=#{nation}
+        </if>
+              		          
+		<if test="null != college and null != college and '' != college">
+                    and  college=#{college}
+        </if>
+              		          
+		<if test="null != major and null != major and '' != major">
+                    and  major=#{major}
+        </if>
+              		          
+		<if test="null != grade and null != grade and '' != grade">
+                    and  grade=#{grade}
+        </if>
+              		          
+		<if test="null != studentClass and null != studentClass and '' != studentClass">
+                    and  student_class=#{studentClass}
+        </if>
+              		          
+		<if test="null != studentId and null != studentId and '' != studentId">
+                    and  student_id=#{studentId}
+        </if>
+              		          
+		<if test="null != studentSex and null != studentSex and '' != studentSex">
+                    and  student_sex=#{studentSex}
+        </if>
+              		          
+		<if test="null != createPeople and null != createPeople and '' != createPeople">
+                    and  create_people=#{createPeople}
+        </if>
+              		          
+		<if test="null != createTime and null != createTime and '' != createTime">
+                    and  create_time=#{createTime}
+        </if>
+              		          
+		<if test="null != updatePeople and null != updatePeople and '' != updatePeople">
+                    and  update_people=#{updatePeople}
+        </if>
+              		          
+		<if test="null != updateTime and null != updateTime and '' != updateTime">
+                    and  update_time=#{updateTime}
+        </if>
+              		          
+		<if test="null != isDelete and null != isDelete and '' != isDelete">
+                    and  is_delete=#{isDelete}
+        </if>
+                     
+       </where>
+			order by id desc
+    </select>
+
+
+    <!-- 根据主键获取单条记录 -->
+    <select id="getById"      resultType="com.redisdemo.demo.entity.Student"  parameterType="Integer">
+        SELECT <include refid="baseColumns"/> FROM t_student WHERE id = #{id} 
+    </select>
+    
+
+    <!-- 插入全部字段 -->
+    <insert id="add" parameterType="com.redisdemo.demo.dto.StudentDTO"  keyProperty="id" keyColumn="id" useGeneratedKeys="true">
+        INSERT INTO t_student
+        <trim prefix="(" suffix=")" suffixOverrides=",">	
+        
+                  
+          student_num,        
+          student_name,        
+          nation,        
+          college,        
+          major,        
+          grade,        
+          student_class,        
+          student_id,        
+          student_sex,        
+          create_people,        
+          create_time,        
+          update_people,        
+          update_time,        
+          is_delete,        
+            
+        </trim>
+        
+        <trim prefix="VALUES (" suffix=")" suffixOverrides=",">            
+                 
+ 		   #{studentNum},         
+ 		   #{studentName},         
+ 		   #{nation},         
+ 		   #{college},         
+ 		   #{major},         
+ 		   #{grade},         
+ 		   #{studentClass},         
+ 		   #{studentId},         
+ 		   #{studentSex},         
+ 		   #{createPeople},         
+ 		   #{createTime},         
+ 		   #{updatePeople},         
+ 		   #{updateTime},         
+ 		   #{isDelete},         
+ 		 	    </trim>
+        
+   		</insert>
+
+
+    <!-- 更新,更新全部字段 -->
+    <update id="updateById" parameterType="com.redisdemo.demo.dto.StudentDTO">
+    
+        UPDATE t_student 
+         <set>                                 
+        		<if test="null != studentNum and null != studentNum and '' != studentNum">
+                 student_num=#{studentNum}, 
+       		 </if>
+        
+                                
+        		<if test="null != studentName and null != studentName and '' != studentName">
+                 student_name=#{studentName}, 
+       		 </if>
+        
+                                
+        		<if test="null != nation and null != nation and '' != nation">
+                 nation=#{nation}, 
+       		 </if>
+        
+                                
+        		<if test="null != college and null != college and '' != college">
+                 college=#{college}, 
+       		 </if>
+        
+                                
+        		<if test="null != major and null != major and '' != major">
+                 major=#{major}, 
+       		 </if>
+        
+                                
+        		<if test="null != grade and null != grade and '' != grade">
+                 grade=#{grade}, 
+       		 </if>
+        
+                                
+        		<if test="null != studentClass and null != studentClass and '' != studentClass">
+                 student_class=#{studentClass}, 
+       		 </if>
+        
+                                
+        		<if test="null != studentId and null != studentId and '' != studentId">
+                 student_id=#{studentId}, 
+       		 </if>
+        
+                                
+        		<if test="null != studentSex and null != studentSex and '' != studentSex">
+                 student_sex=#{studentSex}, 
+       		 </if>
+        
+                                
+        		<if test="null != createPeople and null != createPeople and '' != createPeople">
+                 create_people=#{createPeople}, 
+       		 </if>
+        
+                                
+        		<if test="null != createTime and null != createTime and '' != createTime">
+                 create_time=#{createTime}, 
+       		 </if>
+        
+                                
+        		<if test="null != updatePeople and null != updatePeople and '' != updatePeople">
+                 update_people=#{updatePeople}, 
+       		 </if>
+        
+                                
+        		<if test="null != updateTime and null != updateTime and '' != updateTime">
+                 update_time=#{updateTime}, 
+       		 </if>
+        
+                                
+        		<if test="null != isDelete and null != isDelete and '' != isDelete">
+                 is_delete=#{isDelete}, 
+       		 </if>
+        
+                        </set> WHERE  id = #{id}
+     
+    </update>  
+
+
+
+    <!-- 根据主键删除记录批量 -->
+	<delete id="deleteByIds">
+		delete from t_student where id in
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+    <!-- 根据主键删除记录 -->
+	<delete id="delete">
+		delete from t_student where   id = #{id}
+	</delete>
+
+
+
+
+</mapper>
