@@ -28,7 +28,7 @@ public class ReportFormController {
      * @param query
      * @return
      */
-    @ApiOperation(value = "报表下载")
+    @ApiOperation(value = "报表分页查询")
     @RequestMapping("/getReportFormPage")
     public PageInfo<ClassInfo> getReportFormPage(@RequestBody OrderQuery query){
         PageInfo<ClassInfo> pageInfo = orderService.getReportFormPage(query);

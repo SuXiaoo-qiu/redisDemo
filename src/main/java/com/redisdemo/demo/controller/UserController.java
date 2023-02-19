@@ -161,6 +161,7 @@ public class UserController {
     /**
      * 用户导出
      */
+    @ApiOperation(value = "用户导出")
     @RequestMapping("exportToExcel")
     public ResponseEntity<byte[]> exportExcel(HttpServletRequest request, HttpServletResponse response,@RequestParam HashMap<String, Object> params) {
         return userService.exportExcel(request,response,params);

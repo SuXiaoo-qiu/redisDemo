@@ -31,13 +31,13 @@
         FROM user 
         <where>
         		       		          
-		<if test="null != name and null != name and '' != name">
-                    and  name=#{name}
-        </if>
-              		          
-		<if test="null != accountNumber and null != accountNumber and '' != accountNumber">
-                    and  account_number=#{accountNumber}
-        </if>
+
+            <if test="name != null and name != ''">
+                and name like concat('%',#{name},'%')
+            </if>
+            <if test="accountNumber != null and accountNumber != ''">
+                and account_number like concat('%',#{accountNumber},'%')
+            </if>
               		          
 		<if test="null != password and null != password and '' != password">
                     and  password=#{password}
@@ -186,13 +186,12 @@
         SELECT           id
         , `name`
         , account_number as accountNumber
-        , password
-        , create_time
-        , uodate_time
-        , create_people
-        , uodate_people FROM user WHERE id = #{id}
+        , password as password
+        , create_time as  createTime
+        , uodate_time as  uodateTime
+        , create_people as  createPeople
+        , uodate_people as uodatePeople FROM user WHERE id = #{id}
     </select>
-    
 
     <!-- 插入全部字段 -->
     <insert id="add" parameterType="com.redisdemo.demo.dto.UserDTO"  keyProperty="id" keyColumn="id" useGeneratedKeys="true">
@@ -228,15 +227,16 @@
     <update id="updateById" parameterType="com.redisdemo.demo.dto.UserDTO">
     
         UPDATE user 
-         <set>                                 
+         <set>
 
+             <if test="null != name and null != name and '' != name">
+                   name=#{name},
+             </if>
 
-             <if test="name != null and name != ''">
-                 and name like concat('%',#{name},'%')
+             <if test="null != accountNumber and null != accountNumber and '' != accountNumber">
+                   account_number=#{accountNumber},
              </if>
-             <if test="accountNumber != null and accountNumber != ''">
-                 and account_number like concat('%',#{accountNumber},'%')
-             </if>
+
         		<if test="null != password and null != password and '' != password">
                  password=#{password}, 
        		 </if>
