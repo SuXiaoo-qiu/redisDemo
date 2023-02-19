@@ -10,9 +10,9 @@
     <!-- 表字段 -->
     <sql id="baseColumns">
           id
-        , login_user_ame as loginUserAme
-        , last_login_time as lastLoginTime
-     </sql> 
+        , login_user_ame
+        , last_login_time
+     </sql>
 
     <!-- 分页查询全部 -->
     <select id="getPage" resultMap="BaseResultMap">
