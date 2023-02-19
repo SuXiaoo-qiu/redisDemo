@@ -58,7 +58,7 @@ public class UserController {
     @RequestMapping("login")
     public HttpResult<UserVO> login (@RequestBody HashMap<String,Object> haashMap) {
         if (StringUtil.isNullOrEmpty(haashMap.get("username").toString())){
-            return HttpResult.error("请输入账号");
+            return HttpResult.error("请输入用户名");
         }
         if (StringUtil.isNullOrEmpty(haashMap.get("password").toString())){
             return HttpResult.error("请输入密码");
