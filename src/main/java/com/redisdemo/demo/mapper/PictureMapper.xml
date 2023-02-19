@@ -14,12 +14,12 @@
     <!-- 表字段 -->
     <sql id="baseColumns">
           id
-        , picture_name as pictureName
-        , picture_url as pictureUrl
-        , create_time as createTime
-        , uodate_time as uodateTime
-        , create_people as createPeople
-        , uodate_people as uodatePeople
+        , picture_name
+        , picture_url
+        , create_time
+        , uodate_time
+        , create_people
+        , uodate_people
      </sql> 
 
     <!-- 分页查询全部 -->

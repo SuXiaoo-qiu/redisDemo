@@ -18,7 +18,7 @@ import javax.annotation.Resource;
 @CrossOrigin //跨域
 /* 类注解 */
 @Api(value = "报表管理")
-public class reportFormController {
+public class ReportFormController {
 
     @Resource
     private OrderService orderService;
@@ -28,7 +28,7 @@ public class reportFormController {
      * @param query
      * @return
      */
-    @ApiOperation(value = "条件查询分页")
+    @ApiOperation(value = "报表下载")
     @RequestMapping("/getReportFormPage")
     public PageInfo<ClassInfo> getReportFormPage(@RequestBody OrderQuery query){
         PageInfo<ClassInfo> pageInfo = orderService.getReportFormPage(query);
