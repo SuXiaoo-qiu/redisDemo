@@ -77,7 +77,7 @@
         SELECT    id
         , title
         , details
-        , start_time as  startTme
+        , start_time as  startTime
         , end_time as endTime  FROM advertisement WHERE id = #{id}
     </select>
      <!-- 插入全部字段 -->

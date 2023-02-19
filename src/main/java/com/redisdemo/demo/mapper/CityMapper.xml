@@ -29,9 +29,9 @@
         FROM city 
         <where>
         		       		          
-		<if test="null != name and null != name and '' != name">
-                    and  name=#{name}
-        </if>
+            <if test="name != null and name != ''">
+                and name like concat('%',#{name},'%')
+            </if>
               		          
 		<if test="null != cityDetails and null != cityDetails and '' != cityDetails">
                     and  city_details=#{cityDetails}
