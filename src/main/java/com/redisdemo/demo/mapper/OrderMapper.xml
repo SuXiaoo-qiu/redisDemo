@@ -28,7 +28,7 @@
     <select id="getPage" resultMap="BaseResultMap">
         SELECT         
         	<include refid="baseColumns" />
-        FROM order 
+        FROM `order`
         <where>
         		       		          
 		<if test="null != price and null != price and '' != price">
@@ -67,7 +67,7 @@
     <select id="getAll" resultMap="BaseResultMap">
         SELECT         
         	<include refid="baseColumns" />
-        FROM order 
+        FROM `order`
         <where>
         		       		          
 		<if test="null != price and null != price and '' != price">
