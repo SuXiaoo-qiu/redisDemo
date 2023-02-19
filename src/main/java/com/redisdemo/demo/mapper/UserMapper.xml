@@ -229,16 +229,14 @@
     
         UPDATE user 
          <set>                                 
-        		<if test="null != name and null != name and '' != name">
-                 name=#{name}, 
-       		 </if>
-        
-                                
-        		<if test="null != accountNumber and null != accountNumber and '' != accountNumber">
-                 account_number=#{accountNumber}, 
-       		 </if>
-        
-                                
+
+
+             <if test="name != null and name != ''">
+                 and name like concat('%',#{name},'%')
+             </if>
+             <if test="accountNumber != null and accountNumber != ''">
+                 and account_number like concat('%',#{accountNumber},'%')
+             </if>
         		<if test="null != password and null != password and '' != password">
                  password=#{password}, 
        		 </if>

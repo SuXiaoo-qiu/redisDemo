@@ -89,7 +89,7 @@ public class PictureController {
     @RequestMapping("updateById")
     public HttpResult updateById (@RequestBody PictureDTO pictureDto) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        pictureDto.setUodatePeople(simpleDateFormat.format(new Date()));
+        pictureDto.setUodateTime(simpleDateFormat.format(new Date()));
         return HttpResult.success((pictureService.updateById(pictureDto)));
     }
     
