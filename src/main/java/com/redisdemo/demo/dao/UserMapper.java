@@ -75,6 +75,5 @@ public interface UserMapper {
      */
 	 int deleteByIds(List<String> ids);
 
-	 List<List<String>> exportExcel(UserQuery query);
-	
+
 }

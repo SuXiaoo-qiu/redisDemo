@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -72,6 +74,8 @@ public class PictureController {
     @ApiOperation(value = "新增")
     @RequestMapping("add")
     public HttpResult add (@RequestBody PictureDTO pictureDto) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        pictureDto.setCreateTime(simpleDateFormat.format(new Date()));
    		 return HttpResult.success((pictureService.add(pictureDto)));
     }    
       
@@ -84,6 +88,8 @@ public class PictureController {
     @ApiOperation(value = "修改")
     @RequestMapping("updateById")
     public HttpResult updateById (@RequestBody PictureDTO pictureDto) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        pictureDto.setUodatePeople(simpleDateFormat.format(new Date()));
         return HttpResult.success((pictureService.updateById(pictureDto)));
     }
     

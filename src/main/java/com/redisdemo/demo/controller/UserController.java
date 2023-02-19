@@ -13,10 +13,12 @@ import io.netty.util.internal.StringUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.cglib.core.ClassInfo;
+import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -108,6 +110,8 @@ public class UserController {
     @ApiOperation(value = "新增")
     @RequestMapping("add")
     public HttpResult add (@RequestBody UserDTO userDto) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        userDto.setCreateTime(simpleDateFormat.format(new Date()));
    		 return HttpResult.success((userService.add(userDto)));
     }    
       
@@ -120,6 +124,8 @@ public class UserController {
     @ApiOperation(value = "修改")
     @RequestMapping("updateById")
     public HttpResult updateById (@RequestBody UserDTO userDto) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        userDto.setUodateTime(simpleDateFormat.format(new Date()));
         return HttpResult.success((userService.updateById(userDto)));
     }
     
@@ -152,18 +158,13 @@ public class UserController {
 
 
 
-
     /**
      * 用户导出
      */
-    @RequestMapping(value = "/exportExcel", method = RequestMethod.POST)
-    @ApiOperation(value = "导出excel",produces="application/octet-stream")
-    public void exportCorpLoanDemand(@RequestBody UserQuery query, HttpServletResponse response){ ;
-        userService.exportExcel(query,response);
+    @RequestMapping("exportToExcel")
+    public ResponseEntity<byte[]> exportExcel(HttpServletRequest request, HttpServletResponse response,@RequestParam HashMap<String, Object> params) {
+        return userService.exportExcel(request,response,params);
     }
-
-
-
 
 
 }

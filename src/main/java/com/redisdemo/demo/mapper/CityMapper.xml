@@ -95,7 +95,13 @@
 
     <!-- 根据主键获取单条记录 -->
     <select id="getById"      resultType="com.redisdemo.demo.entity.City"  parameterType="Integer">
-        SELECT <include refid="baseColumns"/> FROM city WHERE id = #{id} 
+        SELECT    id
+        , name
+        , city_details as cityDetails
+        , create_time
+        , uodate_time
+        , create_people
+        , uodate_people FROM city WHERE id = #{id}
     </select>
     
 

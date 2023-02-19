@@ -7,8 +7,11 @@ import com.redisdemo.demo.entity.User;
 import com.redisdemo.demo.query.UserQuery;
 import com.redisdemo.demo.vo.UserVO;
 import org.springframework.cglib.core.ClassInfo;
+import org.springframework.http.ResponseEntity;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.HashMap;
 import java.util.List;
 
 public interface UserService {
@@ -29,10 +32,9 @@ public interface UserService {
 
 	/**
 	 * 导出用户
-	 * @param query
-	 * @param response
+	 * @param params
 	 */
-	void exportExcel(UserQuery query , HttpServletResponse response) ;
+	ResponseEntity<byte[]> exportExcel(HttpServletRequest request, HttpServletResponse  response, HashMap<String, Object> params) ;
 
 	/**
 	 *查询一条数据
