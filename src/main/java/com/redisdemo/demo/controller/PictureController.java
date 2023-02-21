@@ -74,6 +74,9 @@ public class PictureController {
     @ApiOperation(value = "新增")
     @RequestMapping("add")
     public HttpResult add (@RequestBody PictureDTO pictureDto) {
+        if (pictureDto.getPictureUrl().length()>272718){
+            return HttpResult.error("图片大小不能超过200k");
+        }
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         pictureDto.setCreateTime(simpleDateFormat.format(new Date()));
    		 return HttpResult.success((pictureService.add(pictureDto)));

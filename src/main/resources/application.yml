@@ -1,5 +1,5 @@
 server:
-  port: 8889
+  port: 8888
 spring:
   application:
     name: tttt
@@ -39,6 +39,9 @@ spring:
       maximum-pool-size: 12
       minimum-idle: 10
       pool-name: GGLiliKariPool121901638
+web :
+  resources:
+    static-locations: "classpath:/static"
 mybatis:
   mapperLocations: classpath:com/redisdemo/demo/mapper/*.xml
   type-aliases-package: com.redisdemo.demo.* # 实体类所在的位置
