@@ -35,5 +35,4 @@ public class ReportFormController {
         return pageInfo;
     }
 
-
 }

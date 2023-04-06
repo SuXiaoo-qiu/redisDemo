@@ -10,7 +10,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/world?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=GMT%2b8&serverTimezone=Asia/Shanghai
     username: root
-    password: root
+    password: 11111111
     initialSize: 1
     minIdle: 3
     maxActive: 20
