@@ -22,6 +22,11 @@
       <option name="url" value="http://172.17.40.106:8081/repository/maven-public/" />
     </remote-repository>
     <remote-repository>
+      <option name="id" value="central" />
+      <option name="name" value="Central Repository" />
+      <option name="url" value="http://maven.aliyun.com/nexus/content/groups/public/" />
+    </remote-repository>
+    <remote-repository>
       <option name="id" value="aliyunmaven" />
       <option name="name" value="aliyunmaven" />
       <option name="url" value="http://maven.aliyun.com/nexus/content/groups/public/" />

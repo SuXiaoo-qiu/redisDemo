@@ -26,7 +26,7 @@ public class ExcelController {
     public void ExcelTest() {
         Workbook workbook =null;
         try {
-            workbook = WorkbookFactory.create(new File("https://qiaosj.oss-cn-beijing.aliyuncs.com/test.xlsx"));
+            workbook = WorkbookFactory.create(new File("A://work//ttt.xlsx"));
             Sheet sheetAt = workbook.getSheetAt(0);
             List<List<Object>> data = new ArrayList<>();
             for (Row row: sheetAt) {
@@ -50,14 +50,13 @@ public class ExcelController {
                 }
                 data.add(dataRow);
             }
-            // 统计
-            Collections.sort(data,(a,b)->{
-                int counta = (int) a.stream().filter(x -> x != null).count();
-                int countb = (int) a.stream().filter(x -> x != null).count();
-                return Integer.compare(counta, countb);
-            });
-            System.out.println(data.toString());
-            
+            List<Object> objects = new ArrayList<>();
+            for (List lst:data) {
+                Collections.sort(lst);
+                 objects.add(lst);
+            }
+            System.out.println(objects+"排序后");
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (InvalidFormatException e) {
